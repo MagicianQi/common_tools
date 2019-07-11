@@ -20,7 +20,7 @@ import json
 import logging
 
 
-def get_files_from_path(path, recurse=False):
+def get_files_from_path(path, recurse=False, full_path=True):
     """
     Get Files_Path From Input Path
     :param path: Input Path
@@ -30,8 +30,9 @@ def get_files_from_path(path, recurse=False):
     files_path_list = []
     if not os.path.exists(path):
         return []
-    for file in os.listdir(path):
-        file_path = os.path.join(path, file)
+    for file_path in os.listdir(path):
+        if not full_path:
+            file_path = os.path.join(path, file_path)
         if os.path.isdir(file_path):
             if recurse:
                 files_path_list += get_files_from_path(file_path, recurse=True)
