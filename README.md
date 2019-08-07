@@ -2,10 +2,10 @@
 
   Some of the functions I used most
 
-## FileProcess.py
+## FOP.py
 
   Some file preprocessing functions
 
-## DatsProcess.py
+## DPP.py
 
   Some matrix preprocessing functions
