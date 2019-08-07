@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """=================================================
-@Project -> File   ：tools -> FileProcess.py
-@IDE    ：Pycharm
-@Author ：Qi Shuo
-@Date   ：2019-6-18
+@Project -> File   ：tools -> FOP.py
+@IDE    : Pycharm
+@Author : Qi Shuo
+@Date   : 2019-6-18
+@Intro  : File Operations
 =================================================="""
 
 from __future__ import absolute_import
@@ -23,6 +24,7 @@ import logging
 def get_files_from_path(path, recurse=False, full_path=True):
     """
     Get Files_Path From Input Path
+    :param full_path: Full path flag
     :param path: Input Path
     :param recurse: Whether Recursive
     :return: List of Files_Path
@@ -182,3 +184,4 @@ class Logger(object):
 
 if __name__ == "__main__":
     print(get_images_from_path("./"))
+
