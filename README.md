@@ -1,11 +1,18 @@
 # common_tools
 
   Some of the functions I used most
+  
+## Environment
 
-## FOP.py
+* Python 3.6
+* pip install -r requirements.txt
 
-  Some file preprocessing functions
+## Intro
 
-## DPP.py
+* FOP.py
+    
+    Some file preprocessing functions
 
-  Some matrix preprocessing functions
+* DPP.py
+
+    Some matrix preprocessing functions
