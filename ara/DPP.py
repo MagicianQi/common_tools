@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """=================================================
-@Project -> File   £ºtools -> DPP.py
+@Project -> File   ï¼štools -> DPP.py
 @IDE    : Pycharm
 @Author : Qi Shuo
 @Date   : 2019-6-18
@@ -19,13 +19,13 @@ from sklearn import preprocessing
 
 def matrix_normalization(array_input, axis=0):
     """
-    MinMax the input matrix in terms of dimensions.[0~1](¹éÒ»»¯)
+    MinMax the input matrix in terms of dimensions.[0~1](å½’ä¸€åŒ–)
     :param array_input: Input numpy.array()
     :param axis: MinMax dimensions
     :return: The MinMax matrix
     """
     if type(array_input) != np.ndarray:
-        raise TypeError("Data matrix format error£¡Not numpy.array!")
+        raise TypeError("Data matrix format errorï¼Not numpy.array!")
     if axis == 0:
         array_normalization = array_input / array_input.max(axis=axis)
         return array_normalization
@@ -38,13 +38,13 @@ def matrix_normalization(array_input, axis=0):
 
 def matrix_standardization(array_input, axis=0):
     """
-    Standardized input matrix.(±ê×¼»¯)
+    Standardized input matrix.(æ ‡å‡†åŒ–)
     :param array_input: Input numpy.array()
     :param axis: standardized dimensions
     :return: [The Standardized matrix, mean of matrix, std of matrix]
     """
     if type(array_input) != np.ndarray:
-        raise TypeError("Data matrix format error£¡Not numpy.array!")
+        raise TypeError("Data matrix format errorï¼Not numpy.array!")
     if axis == 0:
         mean = array_input.mean(axis=axis)
         std = array_input.std(axis=axis)
@@ -65,14 +65,14 @@ def matrix_standardization(array_input, axis=0):
 
 def matrix_regularization(array_input, axis=0, norm='l2'):
     """
-    Regularized input matrix.(ÕıÔò»¯)
+    Regularized input matrix.(æ­£åˆ™åŒ–)
     :param axis: Regularized dimensions
     :param array_input: Input numpy.array()
     :param norm: Regularized type
     :return: The Regularized matrix.
     """
     if type(array_input) != np.ndarray:
-        raise TypeError("Data matrix format error£¡Not numpy.array!")
+        raise TypeError("Data matrix format errorï¼Not numpy.array!")
     if axis == 0:
         array_regularization = preprocessing.normalize(array_input.T, norm=norm)
         return array_regularization.T
@@ -86,7 +86,7 @@ def matrix_regularization(array_input, axis=0, norm='l2'):
 
 def matrix_binarization(data_input, threshold=0.0):
     """
-    Data binarization.(¶şÖµ»¯)
+    Data binarization.(äºŒå€¼åŒ–)
     :param data_input: Input data
     :param threshold: Threshold of binarization(Less than the threshold is zero, the opposite is one)
     :return: Binary data
