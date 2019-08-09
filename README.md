@@ -5,7 +5,6 @@
 ## Environment
 
 * Python 3.6
-* pip install -r requirements.txt
 
 ## Intro
 
@@ -16,3 +15,8 @@
 * DPP.py
 
     Some matrix preprocessing functions
+    
+## How to use
+
+* pip install -r requirements.txt
+* python setup.py install
