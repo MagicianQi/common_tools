@@ -33,7 +33,7 @@ def get_files_from_path(path, recurse=False, full_path=True):
     if not os.path.exists(path):
         return []
     for file_path in os.listdir(path):
-        if not full_path:
+        if full_path:
             file_path = os.path.join(path, file_path)
         if os.path.isdir(file_path):
             if recurse:
