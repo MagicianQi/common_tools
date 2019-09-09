@@ -1,13 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-"""=================================================
-@Project -> File   ：tools -> FOP.py
-@IDE    : Pycharm
-@Author : Qi Shuo
-@Date   : 2019-6-18
-@Intro  : File Operations
-=================================================="""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -160,26 +151,27 @@ def write_dict_to_json_file(in_dict, out_file_path):
 
 class Logger(object):
 
-    def __init__(self, file_path, file_mode='a'):
+    def __init__(self, file_path, name="logger"):
         """
         Initialize the log class
         :param file_path: Log file path
-        :param file_mode: Open File mode
         """
-        logging.basicConfig(filename=file_path,
-                            filemode=file_mode,
-                            level=logging.INFO,
-                            format='%(message)s')
+        self.logger = logging.getLogger(name)
+        handler = logging.FileHandler(filename=file_path)
+        self.logger.setLevel(logging.INFO)
+        handler.setLevel(logging.INFO)
+        formatter = logging.Formatter('%(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
 
-    @staticmethod
-    def out_print(in_list, separator=","):
+    def out_print(self, in_list, separator=","):
         """
         Print output to file
         :param in_list: Input data list
         :param separator: Separator for each item
         :return: None
         """
-        logging.info("[{}]".format(separator.join(list(map(str, in_list)))))
+        self.logger.info("[{}]".format(separator.join(list(map(str, in_list)))))
 
 
 if __name__ == "__main__":
