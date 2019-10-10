@@ -17,7 +17,22 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 def download_images(image_urls, download_path, max_workers=1, data_slices=10):
+    """
+    Multi Threads download images
+    :param image_urls: Image urls List
+    :param download_path: Image download Path
+    :param max_workers: Max Workers of Thread Pool
+    :param data_slices: Number of data slices
+    :return: None
+    """
     def task(url_list, path, task_id):
+        """
+        Download images task
+        :param url_list: List of image urls
+        :param path: Image download Path
+        :param task_id: ID of the current task
+        :return: Status of Task
+        """
         for url in url_list:
             try:
                 response = requests.get(url)
@@ -35,7 +50,6 @@ def download_images(image_urls, download_path, max_workers=1, data_slices=10):
     for i in range(len(image_urls)):
         urls_list[i % data_slices].append(image_urls[i])
     all_task = [executor.submit(task, urls_list[j], download_path, j) for j in range(len(urls_list))]
-
     for future in as_completed(all_task):
         result = future.result()
         print(result)
