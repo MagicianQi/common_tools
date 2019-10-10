@@ -15,6 +15,7 @@ from __future__ import print_function
 
 import numpy as np
 from sklearn import preprocessing
+from sklearn.metrics.pairwise import euclidean_distances, cosine_similarity
 
 
 def matrix_normalization(array_input, axis=0):
@@ -135,6 +136,50 @@ def one_hot_encoder(vector, sparse=False):
     integer_encoded = vector.reshape(len(vector), 1)
     onehot_encoded = encoder.fit_transform(integer_encoded)
     return onehot_encoded
+
+
+def calculate_vector_cosine_similarity(embedding_a, embedding_b):
+    """
+    Calculate vector cosine_similarity
+    :param embedding_a: Vector a
+    :param embedding_b: Vector b
+    :return: Similarity
+    """
+    cos = np.dot(embedding_a, embedding_b) / (np.linalg.norm(embedding_a) * (np.linalg.norm(embedding_b)))
+    sim = 0.5 + 0.5 * cos
+    return sim
+
+
+def calculate_vector_euclidean_distance(embedding_a, embedding_b):
+    """
+    Calculate vector euclidean_distance
+    :param embedding_a: Vector a
+    :param embedding_b: Vector b
+    :return: Distance
+    """
+    diff = np.subtract(embedding_a, embedding_b)
+    dist = np.sum(np.square(diff), 1)
+    return dist
+
+
+def calculate_matrix_cosine_similarity(matrix_a, matrix_b):
+    """
+    Calculate matrix cosine_similarity
+    :param matrix_a: Matrix a
+    :param matrix_b: Matrix b
+    :return: Similarity
+    """
+    return cosine_similarity(matrix_a, matrix_b)
+
+
+def calculate_matrix_euclidean_distance(matrix_a, matrix_b):
+    """
+    Calculate matrix euclidean_distance
+    :param matrix_a: Matrix a
+    :param matrix_b: Matrix b
+    :return: Distance
+    """
+    return euclidean_distances(matrix_a, matrix_b)
 
 
 if __name__ == "__main__":

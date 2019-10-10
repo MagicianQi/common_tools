@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+"""=================================================
+@Project -> File   ：tools -> FOP.py
+@IDE    : Pycharm
+@Author : Qi Shuo
+@Date   : 2019-6-18
+@Intro  : File Operations Tools
+=================================================="""
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -176,4 +184,3 @@ class Logger(object):
 
 if __name__ == "__main__":
     print(get_images_from_path("./"))
-
