@@ -42,9 +42,4 @@ def download_images(image_urls, download_path, max_workers=1, data_slices=10):
 
 
 if __name__ == "__main__":
-    image_urls = []
-    with open("../test/image.urls", "r") as f:
-        for line in f.readlines():
-            image_urls.append("http://" + line.strip())
-
-    download_images(image_urls, "../test/images", max_workers=10, data_slices=10)
+    pass
