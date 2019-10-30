@@ -33,7 +33,7 @@ def download_image_task(url_list, path, task_id):
     for url in url_list:
         url_list.show_title("task - {}".format(task_id))
         try:
-            response = requests.get("http://" + url)
+            response = requests.get(url)
             response = response.content
             with open(path + url.strip().split("/")[-1], 'wb') as f:
                 f.write(response)
