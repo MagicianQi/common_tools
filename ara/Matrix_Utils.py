@@ -6,7 +6,7 @@
 @IDE    : Pycharm
 @Author : Qi Shuo
 @Date   : 2019-6-18
-@Intro  : Data PreProcessing Tools
+@Intro  : Matrix PreProcessing Tools
 =================================================="""
 
 from __future__ import absolute_import

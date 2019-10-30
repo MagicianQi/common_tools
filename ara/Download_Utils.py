@@ -13,8 +13,12 @@ from __future__ import division
 from __future__ import print_function
 
 import requests
-from contextlib import closing
+import urllib.request
+
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
+
+from ara.Print_Utils import TqdmUpTo, SimpleProgressBar
+from ara.File_Utils import read_text_file_to_list
 
 
 def download_image_task(url_list, path, task_id):
@@ -25,15 +29,17 @@ def download_image_task(url_list, path, task_id):
     :param task_id: ID of the current task
     :return: Status of Task
     """
+    url_list = SimpleProgressBar(url_list)
     for url in url_list:
+        url_list.show_title("task - {}".format(task_id))
         try:
-            response = requests.get(url)
+            response = requests.get("http://" + url)
             response = response.content
             with open(path + url.strip().split("/")[-1], 'wb') as f:
                 f.write(response)
         except Exception as e:
             print(e)
-    return "{}:\t{}".format(task_id, "done")
+    return "task-{}: {}".format(task_id, "done")
 
 
 def download_images(image_urls, download_path, max_workers=1, data_slices=10):
@@ -58,62 +64,21 @@ def download_images(image_urls, download_path, max_workers=1, data_slices=10):
         print(result)
 
 
-class ProgressBar(object):
-    """
-    Progress bar chain
-    """
-    def __init__(self, title,
-                 count=0.0,
-                 run_status=None,
-                 fin_status=None,
-                 total=100.0,
-                 unit='', sep='/',
-                 chunk_size=1.0):
-        super(ProgressBar, self).__init__()
-        self.info = "【%s】%s %.2f %s %s %.2f %s"
-        self.title = title
-        self.total = total
-        self.count = count
-        self.chunk_size = chunk_size
-        self.status = run_status or ""
-        self.fin_status = fin_status or " " * len(self.status)
-        self.unit = unit
-        self.seq = sep
-
-    def __get_info(self):
-        _info = self.info % (self.title, self.status,
-                             self.count/self.chunk_size, self.unit, self.seq, self.total/self.chunk_size, self.unit)
-        return _info
-
-    def refresh(self, count=1, status=None):
-        self.count += count
-        # if status is not None:
-        self.status = status or self.status
-        end_str = "\r"
-        if self.count >= self.total:
-            end_str = '\n'
-            self.status = status or self.fin_status
-        print(self.__get_info(), end=end_str)
-
-
-def download_file(file_url, file_name, chunk_size=1024):
+def download_file(file_url, save_path, unit_divisor=1024):
     """
     Follow the link to download the file
+    :param unit_divisor: Unit
     :param file_url: The file link
-    :param file_name: Download file name
-    :param chunk_size: Download chunk size
+    :param save_path: Download file name
     :return: None
     """
-    with closing(requests.get(file_url, stream=True)) as response:
-        content_size = int(response.headers['content-length'])  # 内容体总大小
-        progress = ProgressBar(file_name, total=content_size,
-                               unit="KB", chunk_size=chunk_size,
-                               run_status="Downloading...", fin_status="Download complete")
-        with open(file_name, "wb") as file:
-            for data in response.iter_content(chunk_size=chunk_size):
-                file.write(data)
-                progress.refresh(count=len(data))
+    with TqdmUpTo(unit='B', unit_scale=True, unit_divisor=unit_divisor, miniters=1,
+                  desc=file_url.replace('/', ' ').split()[-1]) as t:
+        urllib.request.urlretrieve(file_url, filename=save_path, reporthook=t.update_to,
+                                   data=None)
 
 
 if __name__ == "__main__":
-    pass
+    urls = read_text_file_to_list("./result/image.urls", separator="\t")
+    urls = [x[0] for x in urls]
+    download_images(urls, "./result", max_workers=5, data_slices=5)
