@@ -19,6 +19,8 @@ import glob
 import json
 import logging
 
+from ara.Print_Utils import SimpleProgressBar
+
 
 def get_files_from_path(path, recurse=False, full_path=True):
     """
@@ -31,7 +33,9 @@ def get_files_from_path(path, recurse=False, full_path=True):
     files_path_list = []
     if not os.path.exists(path):
         return []
-    for file_path in os.listdir(path):
+    dir_list = SimpleProgressBar(os.listdir(path))
+    dir_list.show_title("Processing")
+    for file_path in dir_list:
         if full_path:
             file_path = os.path.join(path, file_path)
         if os.path.isdir(file_path):
@@ -54,7 +58,9 @@ def get_dirs_from_path(path, recurse=False):
     dirs_path_list = []
     if not os.path.exists(path):
         return []
-    for each_dir in os.listdir(path):
+    dir_list = SimpleProgressBar(os.listdir(path))
+    dir_list.show_title("Processing")
+    for each_dir in dir_list:
         dir_path = os.path.join(path, each_dir)
         if os.path.isdir(dir_path):
             dirs_path_list.append(dir_path)
@@ -79,7 +85,7 @@ def get_images_from_path(path, suffix=None):
     return images_path_list
 
 
-def read_text_file_to_list(file_path, separator, op=None):
+def read_text_file_to_list(file_path, separator="\t", op=None):
     """
     Read the file contents to list
     Split by "separator"
@@ -183,4 +189,5 @@ class Logger(object):
 
 
 if __name__ == "__main__":
-    print(get_images_from_path("./"))
+    text = read_text_file_to_list("/home/qishuo/PycharmProjects/discover-image/result/all_entity.txt", separator="\t")
+    print(text[0])

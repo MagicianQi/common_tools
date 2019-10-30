@@ -79,6 +79,4 @@ def download_file(file_url, save_path, unit_divisor=1024):
 
 
 if __name__ == "__main__":
-    urls = read_text_file_to_list("./result/image.urls", separator="\t")
-    urls = [x[0] for x in urls]
-    download_images(urls, "./result", max_workers=5, data_slices=5)
+    pass
