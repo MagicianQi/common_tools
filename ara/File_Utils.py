@@ -98,9 +98,9 @@ def read_text_file_to_list(file_path, separator="\t", op=None):
     split_data_list = []
     if not os.path.exists(file_path):
         return []
-    with open(file_path, "r") as file:
+    with open(file_path, "r") as f:
         the_number_of_rows = 0
-        file_iter = SimpleProgressBar(file)
+        file_iter = SimpleProgressBar(f)
         file_iter.show_title("Reading file")
         for _, line in enumerate(file_iter):
             the_number_of_rows += 1
