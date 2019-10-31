@@ -18,7 +18,6 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
 
 from ara.Print_Utils import TqdmUpTo, SimpleProgressBar
-from ara.File_Utils import read_text_file_to_list
 
 
 def download_image_task(url_list, path, task_id):
