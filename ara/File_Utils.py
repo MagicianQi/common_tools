@@ -100,7 +100,9 @@ def read_text_file_to_list(file_path, separator="\t", op=None):
         return []
     with open(file_path, "r") as file:
         the_number_of_rows = 0
-        for line in file.readlines():
+        file_iter = SimpleProgressBar(file)
+        file_iter.show_title("Reading file")
+        for _, line in enumerate(file_iter):
             the_number_of_rows += 1
             split_data = line.strip().split(separator)
             if op is not None:
@@ -189,5 +191,4 @@ class Logger(object):
 
 
 if __name__ == "__main__":
-    text = read_text_file_to_list("/home/qishuo/PycharmProjects/discover-image/result/all_entity.txt", separator="\t")
-    print(text[0])
+    read_text_file_to_list("/home/qishuo/PycharmProjects/discover-image/result/all_entity.txt", separator="\t")
