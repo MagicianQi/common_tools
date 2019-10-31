@@ -79,7 +79,7 @@ def print_tensor_of_pb(pb_file_path, gpu_id='0'):
         print([n.name for n in tf.get_default_graph().as_graph_def().node])
 
 
-def pb2savedmodel4serving(pb_file_path, input_tensor_name, output_tensor_name, gpu_id='0'):
+def pb2savedmodel4serving(pb_file_path, input_tensor_name, output_tensor_name, saved_model_path="./saved_model_path", gpu_id='0'):
     os.environ['CUDA_VISIBLE_DEVICES'] = gpu_id
 
     with tf.gfile.GFile(pb_file_path, 'rb') as f:
@@ -102,7 +102,7 @@ def pb2savedmodel4serving(pb_file_path, input_tensor_name, output_tensor_name, g
         output_tensor = graph.get_tensor_by_name(output_tensor_name)  # "import/predictions/Softmax:0"
 
         with tf.Session() as sess:
-            builder = tf.saved_model.builder.SavedModelBuilder("./saved_model_path")
+            builder = tf.saved_model.builder.SavedModelBuilder(saved_model_path)
 
             model_input = tf.saved_model.utils.build_tensor_info(input_tensor)
             model_output = tf.saved_model.utils.build_tensor_info(output_tensor)
