@@ -88,7 +88,7 @@ def pb2savedmodel4serving(pb_file_path, input_tensor_name, output_tensor_name, g
 
     graph = tf.Graph()
     with graph.as_default():
-        # ---------------Add a layer in front of the Graph---------------
+        # ---------------Add layers in front of the Graph---------------
         # input_bytes = tf.placeholder(tf.string, shape=(), name='input_images')
         # decoded_image = tf.image.decode_jpeg(tf.reshape(input_bytes, []), channels=3)
         # decoded_image = tf.cast(decoded_image, tf.float32)
@@ -96,6 +96,8 @@ def pb2savedmodel4serving(pb_file_path, input_tensor_name, output_tensor_name, g
         # decoded_image = tf.expand_dims(decoded_image, 0)
         # tf.import_graph_def(graph_def, input_map={"input_1:0", decoded_image})
         # ---------------------------------------------------------------
+
+        tf.import_graph_def(graph_def)
         input_tensor = graph.get_tensor_by_name(input_tensor_name)  # "input_1:0"
         output_tensor = graph.get_tensor_by_name(output_tensor_name)  # "import/predictions/Softmax:0"
 
