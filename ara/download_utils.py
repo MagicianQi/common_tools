@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """=================================================
-@Project -> File   ：tools -> Download_Utils.py
+@Project -> File   ：tools -> download_utils.py
 @IDE    : Pycharm
 @Author : Qi Shuo
 @Date   : 2019-10-10
@@ -17,7 +17,7 @@ import urllib.request
 
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
 
-from ara.Print_Utils import TqdmUpTo, SimpleProgressBar
+from ara.print_utils import TqdmUpTo, SimpleProgressBar
 
 
 def download_image_task(url_list, path, task_id):

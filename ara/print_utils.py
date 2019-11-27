@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """=================================================
-@Project -> File   ：tools -> Print_Utils.py
+@Project -> File   ：tools -> print_utils.py
 @IDE    : Pycharm
 @Author : Qi Shuo
 @Date   : 2019-10-30

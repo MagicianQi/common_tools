@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """=================================================
-@Project -> File   ：tools -> File_Utils.py
+@Project -> File   ：tools -> file_utils.py
 @IDE    : Pycharm
 @Author : Qi Shuo
 @Date   : 2019-6-18
@@ -19,7 +19,7 @@ import glob
 import json
 import logging
 
-from ara.Print_Utils import SimpleProgressBar
+from ara.print_utils import SimpleProgressBar
 
 
 def get_files_from_path(path, recurse=False, full_path=True):

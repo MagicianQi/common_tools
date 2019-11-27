@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """=================================================
-@Project -> File   ：tools -> Matrix_Utils.py
+@Project -> File   ：tools -> matrix_utils.py
 @IDE    : Pycharm
 @Author : Qi Shuo
 @Date   : 2019-6-18
