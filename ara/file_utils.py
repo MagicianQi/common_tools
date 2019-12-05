@@ -191,4 +191,4 @@ class Logger(object):
 
 
 if __name__ == "__main__":
-    read_text_file_to_list("/home/qishuo/PycharmProjects/discover-image/result/all_entity.txt", separator="\t")
+    pass
