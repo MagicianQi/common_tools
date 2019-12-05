@@ -15,11 +15,23 @@ from __future__ import print_function
 import redis
 
 
-class RedisConnection:
+class RedisConnection(object):
 
     def __init__(self, host, port, password, db):
         self.redis = redis.StrictRedis(host=host,
                                        port=port,
                                        password=password,
                                        db=db)
+
+    def close(self):
+        self.redis.connection_pool.release()
+
+
+class RedisPipeline(RedisConnection):
+
+    def __init__(self, host, port, password, db):
+        super(RedisPipeline, self).__init__(host, port, password, db)
         self.pipeline = self.redis.pipeline()
+
+    def execute(self):
+        self.pipeline.execute()
