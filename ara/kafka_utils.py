@@ -17,6 +17,32 @@ from kafka import KafkaConsumer, KafkaProducer
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
+class KafkaProducerRunner(object):
+    __slots__ = ['bootstrap_servers', 'topic', 'producer', 'compression_type']
+
+    def __init__(self, bootstrap_servers, topic, compression_type=None):
+        self.bootstrap_servers = bootstrap_servers
+        self.topic = topic
+        self.compression_type = compression_type
+        self.producer = KafkaProducer(bootstrap_servers=self.bootstrap_servers, compression_type=self.compression_type)
+
+    def send_message(self, key, value, timeout=10):
+        key = self._convert_message(key)
+        value = self._convert_message(value)
+        future = self.producer.send(self.topic, key=key, value=value)
+        return future.get(timeout=timeout)
+
+    @staticmethod
+    def _convert_message(message):
+        if type(message) == "str":
+            message = message.encode("utf-8")
+        elif type(message) == "bytes":
+            pass
+        else:
+            message = "{}".format(message).encode("utf-8")
+        return message
+
+
 class KafkaConsumerRunner(object):
     __slots__ = ['bootstrap_servers', 'max_workers', 'group_id', 'topics',
                  'executor', 'poll_timeout_ms', 'poll_max_records']
@@ -49,16 +75,16 @@ class KafkaConsumerRunner(object):
                 for message in messages:
                     self.process_records(tp.topic, tp.partition, message.offset, message.key, message.value)
 
-    @abstractmethod
-    def process_records(self, topic, partition, offset, key, value):
-        pass
-
     def run(self):
         all_task = [self.executor.submit(self._task, task_id) for task_id in range(self.max_workers)]
         for future in as_completed(all_task):
             result = future.result()
             print(result)
 
+    @abstractmethod
+    def process_records(self, topic, partition, offset, key, value):
+        pass
+
 
 if __name__ == "__main__":
-    pass
+    print(type("test"))
