@@ -13,6 +13,8 @@ from __future__ import division
 from __future__ import print_function
 
 import os
+import time
+import datetime
 
 import pandas as pd
 import glob
@@ -180,14 +182,18 @@ class Logger(object):
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
 
-    def out_print(self, in_list, separator=","):
+    def out_print(self, line, with_time=False):
         """
         Print output to file
-        :param in_list: Input data list
-        :param separator: Separator for each item
+        :param with_time: Whether to print the date
+        :param line: Input text line
         :return: None
         """
-        self.logger.info("[{}]".format(separator.join(list(map(str, in_list)))))
+        if with_time:
+            date_str = datetime.datetime.fromtimestamp(time.time()).strftime("%Y-%m-%d %H:%M:%S.%f")
+            self.logger.info("{} | {}".format(date_str, line))
+        else:
+            self.logger.info("{}".format(line))
 
 
 if __name__ == "__main__":
