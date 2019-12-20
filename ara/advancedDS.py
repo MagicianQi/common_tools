@@ -17,6 +17,9 @@ import heapq
 
 
 class PriorityQueue:
+    """Priority queue
+    Elements push or pop by priority
+    """
     def __init__(self):
         self._queue = []
         self._index = 0
