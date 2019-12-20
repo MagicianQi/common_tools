@@ -59,7 +59,9 @@ class KafkaProducerRunner(object):
 class KafkaConsumerRunner(object):
     """KafkaConsumerRunner
 
-    Advanced class from KafkaProducer
+    Advanced class from KafkaProducer.
+        1.Implement abstract function process_records()
+        2.call run()
 
     Attributes:
         bootstrap_servers: 'host[:port]' string (or list of 'host[:port]'
