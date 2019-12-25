@@ -196,5 +196,11 @@ class Tree:
         return abs(cls.depth(ancestor) - cls.depth(node_a)) + abs(cls.depth(ancestor) - cls.depth(node_b))
 
 
+class Graph:
+
+    def __init__(self):
+        pass
+
+
 if __name__ == "__main__":
     pass

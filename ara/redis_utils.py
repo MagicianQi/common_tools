@@ -6,6 +6,7 @@
 @Author : Qi Shuo
 @Date   : 2019-11-22
 @Intro  : Redis tools
+@Ref    : https://cloud.tencent.com/developer/article/1151834
 =================================================="""
 
 from __future__ import absolute_import
