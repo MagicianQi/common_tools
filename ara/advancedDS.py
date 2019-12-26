@@ -6,6 +6,7 @@
 @Author : Qi Shuo
 @Date   : 2019-12-20
 @Intro  : Advanced data structure
+@Ref    : https://wdxtub.com/interview/14520597319260.html
 =================================================="""
 
 from __future__ import absolute_import
@@ -199,7 +200,55 @@ class Tree:
 class Graph:
 
     def __init__(self):
-        pass
+        self.adjacency = {}
+
+    def __str__(self):
+        if len(self.adjacency) == 0:
+            return "None"
+        else:
+            txt_list = []
+            for node, link in self.adjacency.items():
+                txt_list.append("{}: {}".format(node, link))
+            return "\n".join(txt_list)
+
+    def add_node(self, node):
+        if node not in self.adjacency:
+            self.adjacency.setdefault(node, [])
+
+    def add_link(self, node_a, node_b):
+        if node_a not in self.adjacency:
+            raise Exception("{} not in graph.".format(node_a))
+        if node_b not in self.adjacency:
+            raise Exception("{} not in graph.".format(node_b))
+        self.adjacency[node_a].append(node_b)
+        self.adjacency[node_b].append(node_a)
+
+    def depth_first_search(self, node, order_list=None):
+        if node is None:
+            return []
+        if order_list is None:
+            order_list = []
+        if node not in order_list:
+            order_list.append(node)
+        for link in self.adjacency[node]:
+            if link not in order_list:
+                order_list.append(link)
+                self.depth_first_search(link, order_list)
+        return order_list
+
+    def breadth_first_search(self, node):
+        if node is None:
+            return []
+        order_list = []
+        queue_list = [node]
+        while len(queue_list) != 0:
+            for link in self.adjacency[node]:
+                if link not in order_list:
+                    queue_list.append(link)
+            node = queue_list.pop(0)
+            if node not in order_list:
+                order_list.append(node)
+        return order_list
 
 
 if __name__ == "__main__":
