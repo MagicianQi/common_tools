@@ -24,6 +24,21 @@ class RedisConnection(object):
                                        password=password,
                                        db=db)
 
+    def all_keys(self, pattern=None):
+        keys = []
+        for key in self.redis.scan_iter(match=pattern):
+            keys.append(key)
+        return keys
+
+    def flush_all(self):
+        return self.redis.flushall()
+
+    def get_val_by_key(self, key):
+        return self.redis.get(key)
+
+    def set_key(self, key, val):
+        return self.redis.set(key, val)
+
     def close(self):
         self.redis.connection_pool.release()
 
@@ -36,3 +51,7 @@ class RedisPipeline(RedisConnection):
 
     def execute(self):
         self.pipeline.execute()
+
+
+if __name__ == "__main__":
+    pass
