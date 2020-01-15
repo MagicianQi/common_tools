@@ -13,6 +13,7 @@ from __future__ import division
 from __future__ import print_function
 
 import os
+import sys
 import time
 import datetime
 
@@ -20,6 +21,7 @@ import pandas as pd
 import glob
 import json
 import logging
+import logging.handlers
 
 from ara.print_utils import SimpleProgressBar
 
@@ -194,6 +196,43 @@ class Logger(object):
             self.logger.info("{} | {}".format(date_str, line))
         else:
             self.logger.info("{}".format(line))
+
+
+def error_logger(log_path, name):
+    """
+    formatting error log
+    :param log_path: error log path
+    :param name: log name
+    :return: Logger
+    """
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+
+    # Terminal output INFO log
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setFormatter(logging.Formatter(
+        "[{asctime}][{levelname}][][{filename}:{lineno}] {message}",
+        style='{')
+    )
+
+    # File output ERROR log
+    error_handler = logging.handlers.RotatingFileHandler(
+        filename=log_path,
+        mode="a",
+        encoding="utf-8",
+        maxBytes=300 * 1024 * 1024,
+        backupCount=5
+    )
+    error_handler.setFormatter(logging.Formatter(
+        "[{asctime}][{levelname}][][{filename}:{lineno}] {message}",
+        style='{')
+    )
+    error_handler.setLevel(logging.ERROR)
+
+    logger.addHandler(console_handler)
+    logger.addHandler(error_handler)
+    logger.propagate = False
+    return logger
 
 
 if __name__ == "__main__":
