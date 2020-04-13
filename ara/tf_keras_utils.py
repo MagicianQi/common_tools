@@ -91,6 +91,8 @@ def pb2savedmodel4serving(pb_file_path, input_tensor_name, output_tensor_name, s
         # ---------------Add layers in front of the Graph---------------
         # input_bytes = tf.placeholder(tf.string, shape=(), name='input_images')
         # decoded_image = tf.image.decode_jpeg(tf.reshape(input_bytes, []), channels=3)
+        # # input_bytes = tf.placeholder(tf.string, shape=[None], name='input_images')
+        # # decoded_image_batch = tf.map_fn(tf.image.decode_jpeg, input_bytes, dtype=tf.uint8)
         # decoded_image = tf.cast(decoded_image, tf.float32)
         # decoded_image = decoded_image / 255.
         # decoded_image = tf.expand_dims(decoded_image, 0)
