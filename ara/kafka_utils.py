@@ -109,6 +109,8 @@ class KafkaConsumerRunner(object):
 
     def _task(self, task_id):
         consumer = self._create_consumer()
+        # for message in consumer:
+        #     self.executor.submit(self.process_records, msg.key, msg.value)
         while True:
             msg_pack = consumer.poll(timeout_ms=self.poll_timeout_ms, max_records=self.poll_max_records)
             for tp, messages in msg_pack.items():
