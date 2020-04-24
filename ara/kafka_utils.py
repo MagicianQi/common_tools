@@ -101,6 +101,11 @@ class KafkaConsumerRunner(object):
     def _create_executor(self):
         executor = ThreadPoolExecutor(max_workers=self.max_workers)
         return executor
+    
+    def _get_partition_set(self):
+        consumer = KafkaConsumer(group_id=self.group_id, bootstrap_servers=self.bootstrap_servers)
+        partition_set = consumer.partitions_for_topic(self.topics)
+        return partition_set
 
     def _task(self, task_id):
         consumer = self._create_consumer()
@@ -112,7 +117,7 @@ class KafkaConsumerRunner(object):
                     self.process_records(tp.topic, tp.partition, message.offset, message.key, message.value)
 
     def run(self):
-        all_task = [self.executor.submit(self._task, task_id) for task_id in range(self.max_workers)]
+        all_task = [self.executor.submit(self._task, task_id) for task_id in self._get_partition_set()]
         for future in as_completed(all_task):
             result = future.result()
             print(result)
