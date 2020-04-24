@@ -119,7 +119,8 @@ class KafkaConsumerRunner(object):
                     self.process_records(tp.topic, tp.partition, message.offset, message.key, message.value)
 
     def run(self):
-        all_task = [self.executor.submit(self._task, task_id) for task_id in self._get_partition_set()]
+        all_task = [self.executor.submit(self._task, task_id) for task_id in range(self.max_workers)]
+        # all_task = [self.executor.submit(self._task, task_id) for task_id in self._get_partition_set()]
         for future in as_completed(all_task):
             result = future.result()
             print(result)
